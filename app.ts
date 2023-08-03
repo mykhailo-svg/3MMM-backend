@@ -1,3 +1,4 @@
+//@ts-nocheck
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -20,7 +21,7 @@ const dbURI = "mongodb+srv://user:Gekrq1YYqKpRlwm9@cluster0.lmqr4rh.mongodb.net/
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
-    console.log("connected");
+    console.log("connected" );
     app.listen(PORT)
   })
   .catch(err => console.log(err));
