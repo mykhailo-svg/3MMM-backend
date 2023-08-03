@@ -1,4 +1,5 @@
-const express = require('express');
+const uuid = require('uuid');
+const express = require('express')
 const morgan = require('morgan');
 const cors = require('cors');
 
@@ -18,72 +19,60 @@ app.use(cors())
 const dbURI = "mongodb+srv://user:Gekrq1YYqKpRlwm9@cluster0.lmqr4rh.mongodb.net/test?retryWrites=true&w=majority";
 // "mongodb+srv://<username>:<password>@cluster0.lmqr4rh.mongodb.net/?retryWrites=true&w=majority"
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => {
-    console.log("connected");
+const OPTIONS: any = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
+
+mongoose.connect(dbURI, OPTIONS)
+  .then((result: string) => {
+    console.log("connected" + result);
     app.listen(PORT)
   })
-  .catch(err => console.log(err));
+  .catch((err: string) => console.log(err));
 
 app.use(morgan('dev'));
 
-app.get('/update-users', (req, res) => {
-  
-  //count query
-  Blog.find().skip(req.query.step).limit(1)
-  .then((result)=>{
-    if (result.length>0) {
-      res.json(result)
-    }
-    else{
-      res.json({result})
-    }
-  })
-  .catch((err)=>{
-    console.log("some err");
-  })
-
-  // res.json({
-  //   message: "hello from backend! express.js"
-  // })
 
 
-})
 
 
-app.get('/all-users', (req, res) => {
 
 
-  // if (req.query.update) {
-  //   console.log("yes");
-  // }
+
+
+app.get('/all-users', (req: any, res: any) => {
+
   console.log(req.query.step + '- step');
 
-  //count query
+
+
+
   Blog.countDocuments()
-  .then((count)=>{
-    console.log("length:"+count);
-  })
-  .catch((err)=>{
-    console.log("some err");
-  })
+    .then((count: number) => {
+      console.log("length:" + count);
+    })
+    .catch((err: string) => {
+      console.log("some err");
+    })
 
 
   //get all users
-  Blog.find().skip(req.query.step).limit(1)
-    .then((result) => {
+
+  let step_parameter: any = req.query.step;
+  const idUniq = uuid.v4()
+  console.log(idUniq);
+
+
+  Blog.find().skip(step_parameter).limit(1)
+    .then((result: any) => {
       res.json(result)
     })
-    .catch((err) => {
+    .catch((err: any) => {
       console.log(err)
     }
 
     )
-
-  // res.json({
-  //   message: "hello from backend! express.js"
-  // })
-
 
 })
 
