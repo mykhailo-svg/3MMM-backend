@@ -1,7 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
+
+import {InferSchemaType,Schema} from 'mongoose'
 
 const scheme = mongoose.Schema;
+
+export interface IUser extends mongoose.Document {
+    name: string; 
+    somethingElse?: number; 
+};
+
 
 const blogScheme = new mongoose.Schema({
     gender: {
@@ -19,6 +27,8 @@ const blogScheme = new mongoose.Schema({
     },
 }, { timestamps: false });
 
-const Blog = mongoose.model('Users', blogScheme);
+let BlogModel = mongoose.model('Users', blogScheme);
 
-module.exports = Blog;
+
+
+export default BlogModel;

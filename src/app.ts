@@ -1,12 +1,21 @@
-const uuid = require('uuid');
-const express = require('express')
+
+//some some
+import * as uuid from 'uuid';
+import * as express from 'express';
 const morgan = require('morgan');
 const cors = require('cors');
 
 
-const Blog = require('./modules/userPlaceholder');
 
-const mongoose = require('mongoose');
+
+
+
+
+import mongoose from 'mongoose';
+import Blog from './modules/userPlaceholder';
+
+
+
 
 
 //express app
@@ -25,7 +34,7 @@ const OPTIONS: any = {
 }
 
 mongoose.connect(dbURI, OPTIONS)
-  .then((result: string) => {
+  .then((result: any) => {
     console.log("connected" + result);
     app.listen(PORT)
   })
@@ -45,9 +54,9 @@ app.get('/all-users', (req: any, res: any) => {
 
   console.log(req.query.step + '- step');
 
+  
 
-
-
+  
   Blog.countDocuments()
     .then((count: number) => {
       console.log("length:" + count);
@@ -60,7 +69,7 @@ app.get('/all-users', (req: any, res: any) => {
   //get all users
 
   let step_parameter: any = req.query.step;
-  const idUniq = uuid.v4()
+  const idUniq = uuid.v4();
   console.log(idUniq);
 
 
@@ -72,8 +81,23 @@ app.get('/all-users', (req: any, res: any) => {
       console.log(err)
     }
 
+
     )
+
 
 })
 
 
+// app.get('/all-users', (req: any, res: any) => {
+  
+//   Blog.find().skip()
+//     .then((result: any) => {
+//       res.json(result)
+//     })
+//     .catch((err: any) => {
+//       console.log(err)
+//     }
+
+//     )
+    
+// })
