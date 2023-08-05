@@ -16,6 +16,7 @@ import mongoose from 'mongoose';
 
 import Blog from './modules/userPlaceholder';
 import { type } from 'os';
+import UserRouter from './routers/user-router';
 
 
 
