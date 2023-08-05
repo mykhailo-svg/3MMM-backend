@@ -25,7 +25,7 @@ const blogScheme = new mongoose.Schema({
         required: true,
 
     },
-}, { timestamps: false });
+}, { timestamps: false ,versionKey:false});
 
 let BlogModel = mongoose.model('Users', blogScheme);
 

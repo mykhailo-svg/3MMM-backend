@@ -2,17 +2,22 @@
 //some some
 import * as uuid from 'uuid';
 import * as express from 'express';
-const morgan = require('morgan');
+
 const cors = require('cors');
 
 
 
 
+import * as morgan from 'morgan';
 
 
 
 import mongoose from 'mongoose';
+
 import Blog from './modules/userPlaceholder';
+import { type } from 'os';
+
+
 
 
 
@@ -20,6 +25,11 @@ import Blog from './modules/userPlaceholder';
 
 //express app
 const app = express();
+
+type TypeRequest = express.Request; 
+type TypeResponse = express.Response;
+
+
 const PORT = process.env.PORT || 3001;
 
 app.use(cors())
@@ -50,12 +60,11 @@ app.use(morgan('dev'));
 
 
 
-app.get('/all-users', (req: any, res: any) => {
+app.get('/all-users', (req:express.Request, res:express.Response) => {
 
-  console.log(req.query.step + '- step');
+  // console.log(req.query.step + '- step');
 
   
-
   
   Blog.countDocuments()
     .then((count: number) => {
@@ -88,16 +97,18 @@ app.get('/all-users', (req: any, res: any) => {
 })
 
 
-// app.get('/all-users', (req: any, res: any) => {
+app.get('/get-user/:id', (req:express.Request, res:express.Response) => {
   
-//   Blog.find().skip()
-//     .then((result: any) => {
-//       res.json(result)
-//     })
-//     .catch((err: any) => {
-//       console.log(err)
-//     }
+  
+  Blog.findById(req.params.id)
+    .then((result: any) => {
+      res.json(result)
+    })
+    .catch((err: any) => {
+      console.log("some error")
+    }
 
-//     )
+    )
     
-// })
+    
+})
