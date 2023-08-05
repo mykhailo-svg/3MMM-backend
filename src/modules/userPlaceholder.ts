@@ -11,6 +11,7 @@ export interface IUser extends mongoose.Document {
 };
 
 
+
 const blogScheme = new mongoose.Schema({
     gender: {
         type: String,
