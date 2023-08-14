@@ -5,31 +5,26 @@ import {InferSchemaType,Schema} from 'mongoose'
 
 const scheme = mongoose.Schema;
 
-export interface IUser extends mongoose.Document {
-    name: string; 
-    somethingElse?: number; 
+export interface InterfaceSignupUser extends mongoose.Document {
+    email: string
+    password:string 
+    isActivated:boolean
+    activationLink:string
+    
 };
 
 
 
-const blogScheme = new mongoose.Schema({
-    gender: {
-        type: String,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    occupation: {
-        type: String,
-        required: true,
+const signupScheme = new mongoose.Schema<InterfaceSignupUser>({
+    email:{type:String,unique:true,required:true},
+    password:{type:String,required:true},
+    isActivated:{type:Boolean,default:false},
+    activationLink:{type:String}
 
-    },
 }, { timestamps: false ,versionKey:false});
 
-let BlogModel = mongoose.model('Users', blogScheme);
+let SignupgModel = mongoose.model('Signup', signupScheme);
 
 
 
-export default BlogModel;
+export default SignupgModel;
