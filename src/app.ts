@@ -1,4 +1,5 @@
-
+import * as cookieParser from 'cookie-parser';
+import * as dotenv from 'dotenv';
 import * as uuid from 'uuid';
 import * as express from 'express';
 
@@ -12,6 +13,8 @@ import Blog from './modules/userPlaceholder';
 
 import UserRouter from './routers/User/user-router';
 
+dotenv.config();
+
 
 
 
@@ -23,9 +26,11 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors())
+app.use(morgan('dev'));
 
+app.use(cookieParser());
 
-const dbURI = "mongodb+srv://user:Gekrq1YYqKpRlwm9@cluster0.lmqr4rh.mongodb.net/test?retryWrites=true&w=majority";
+const dbURI = process.env.DB_URL;
 // "mongodb+srv://<username>:<password>@cluster0.lmqr4rh.mongodb.net/?retryWrites=true&w=majority"
 
 const OPTIONS: any = {
@@ -40,7 +45,7 @@ mongoose.connect(dbURI, OPTIONS)
   })
   .catch((err: string) => console.log(err));
 
-app.use(morgan('dev'));
+
 
 
 

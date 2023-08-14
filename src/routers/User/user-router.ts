@@ -1,8 +1,7 @@
-//@ts-nocheck
 import { Router} from "express";
 
 
-const UserRouter = new Router()
+const UserRouter = Router()
 
 import userController from "./user-controller";
 

@@ -1,5 +1,4 @@
-//@ts-nocheck
-import { Request } from 'express';
+import { Request,Response } from 'express';
 
 import * as uuid from 'uuid';
 
