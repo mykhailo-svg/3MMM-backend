@@ -6,25 +6,21 @@ import {InferSchemaType,Schema} from 'mongoose'
 const scheme = mongoose.Schema;
 
 export interface InterfaceSignupUser extends mongoose.Document {
-    email: string
-    password:string 
-    isActivated:boolean
-    activationLink:string
+    user:any
+    refreshToken:string
     
 };
 
 
 
-const signupScheme = new mongoose.Schema<InterfaceSignupUser>({
-    email:{type:String,unique:true,required:true},
-    password:{type:String,required:true},
-    isActivated:{type:Boolean,default:false},
-    activationLink:{type:String}
+const tokenScheme = new mongoose.Schema<InterfaceSignupUser>({
+    user:{type:Schema.Types.ObjectId,ref:'Signup'},
+    refreshToken:{type:String,required:true}
 
 }, { timestamps: false ,versionKey:false});
 
-let SignupgModel = mongoose.model('Signup', signupScheme);
+let tokenModel = mongoose.model('Signup', tokenScheme);
 
 
 
-export default SignupgModel;
+export default tokenModel;

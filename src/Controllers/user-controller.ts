@@ -2,7 +2,7 @@ import { Request,Response } from 'express';
 
 import * as uuid from 'uuid';
 
-import Blog from '../../modules/userPlaceholder';
+import Blog from '../modules/userPlaceholder';
 
 class UserController {
     getUserById(req: Request, res: Response) {

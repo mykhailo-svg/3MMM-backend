@@ -13,6 +13,8 @@ import Blog from './modules/userPlaceholder';
 
 import UserRouter from './routers/User/user-router';
 
+import AuthorizationRouter from './routers/Signup/signup-router';
+
 dotenv.config();
 
 
@@ -53,6 +55,8 @@ mongoose.connect(dbURI, OPTIONS)
 
 
 app.use('',UserRouter);
+
+app.use('',AuthorizationRouter);
 
 
 
