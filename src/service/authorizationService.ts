@@ -20,7 +20,7 @@ class userService{
         const activationLink = uuid.v4();
         const user = await SignupgModel.create({email,password:hashPassword,activationLink});
 
-        await mailService.sendActivationMail(email,activationLink);
+        await mailService.sendActivationMail(email,`${process.env.API_URL}/activate/${activationLink}`);
 
 
         const userDTO = new UserDto(user);
