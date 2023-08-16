@@ -16,14 +16,29 @@ export interface InterfaceSignupUser extends mongoose.Document {
 
 
 const signupScheme = new mongoose.Schema<InterfaceSignupUser>({
-    email:{type:String,unique:true,required:true},
-    password:{type:String,required:true},
-    isActivated:{type:Boolean,default:false},
-    activationLink:{type:String}
+    email:{
+        type:String,
+        unique:true,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    isActivated:{
+        type:Boolean,
+       
+        default:false
+    },
+    activationLink:{
+        type:String
+        
+    }
 
-}, { timestamps: false ,versionKey:false});
+}, { timestamps: false ,versionKey:false,collection:'Signup'});
 
-let SignupgModel = mongoose.model('Signup', signupScheme);
+
+let SignupgModel =  mongoose.model('Signup', signupScheme);
 
 
 

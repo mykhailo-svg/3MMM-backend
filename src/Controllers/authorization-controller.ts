@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import authorizationService from '../service/authorizationService';
+
 
 
 
@@ -6,9 +8,16 @@ class AuthorizationController {
     async registration(req: Request, res: Response) {
 
         try {
-            res.json('hiii')
+
+            const {email,password} = req.body; 
+            
+            
+            const userData = await authorizationService.registration(email, password)
+            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000 ,httpOnly:true})
+            return res.json(userData);
         }
         catch (error) {
+            console.log(error);
 
         }
 

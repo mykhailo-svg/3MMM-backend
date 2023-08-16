@@ -19,7 +19,7 @@ const tokenScheme = new mongoose.Schema<InterfaceSignupUser>({
 
 }, { timestamps: false ,versionKey:false});
 
-let tokenModel = mongoose.model('Signup', tokenScheme);
+let tokenModel = mongoose.model('Tokens', tokenScheme);
 
 
 

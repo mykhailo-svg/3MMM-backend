@@ -31,6 +31,9 @@ app.use(cors())
 app.use(morgan('dev'));
 
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+ 
 
 const dbURI = process.env.DB_URL;
 // "mongodb+srv://<username>:<password>@cluster0.lmqr4rh.mongodb.net/?retryWrites=true&w=majority"
