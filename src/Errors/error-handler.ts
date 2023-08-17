@@ -15,11 +15,14 @@ export default class ApiError extends Error {
     }
 
     static UnauthorizedError() {
+        console.log('User is unathorized');
+        
         return new ApiError(401, 'User is unathorized')
     }
 
-    static BadRequest() {
-        return new ApiError(400, '', [])
+    static BadRequest(message:string) {
+        console.log(message);
+        return new ApiError(400, message, [])
     }
 
 }

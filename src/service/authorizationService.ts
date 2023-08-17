@@ -6,6 +6,7 @@ import * as uuid from 'uuid';
 import mailService from "./mailService";
 import tokenService from "./tokenService";
 import UserDto from "../dtos/userDTO";
+import ApiError from "../Errors/error-handler";
 
 
 
@@ -14,7 +15,9 @@ class userService{
     async registration(email:string,password:string){
         const candidate = await SignupgModel.findOne({email:email});
         if (candidate) {
-            throw new Error(`User with ${email} exists!!!`)
+            console.log(`User with ${email} exists!`);
+            
+            throw ApiError.BadRequest(`User with ${email} exists!`)
         }
         const hashPassword = await bcrypt.hash(password,3);
         const activationLink = uuid.v4();

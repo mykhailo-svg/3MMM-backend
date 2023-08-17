@@ -5,7 +5,7 @@ import authorizationService from '../service/authorizationService';
 
 
 class AuthorizationController {
-    async registration(req: Request, res: Response) {
+    async registration(req: Request, res: Response,next:(error:string)=>void) {
 
         try {
 
@@ -17,35 +17,35 @@ class AuthorizationController {
             return res.json(userData);
         }
         catch (error) {
-            console.log(error);
+            next(error);
 
         }
 
 
     }
-    async login(req: Request, res: Response) {
+    async login(req: Request, res: Response,next:(error:string)=>void) {
 
         try {
             res.json('hiii')
         }
         catch (error) {
-
+            next(error);
         }
 
 
     }
-    async logout(req: Request, res: Response) {
+    async logout(req: Request, res: Response,next:(error:string)=>void) {
 
         try {
             res.json('hiii')
         }
         catch (error) {
-
+            next(error);
         }
 
 
     }
-    async activate(req: Request, res: Response) {
+    async activate(req: Request, res: Response,next:(error:string)=>void) {
 
         try {
             console.log(`link ${req.params.link}`);
@@ -57,29 +57,29 @@ class AuthorizationController {
         }
         catch (error) {
             console.log(error);
-            
+            next(error);
         }
 
 
     }
-    async refresh(req: Request, res: Response) {
+    async refresh(req: Request, res: Response,next:(error:string)=>void) {
 
         try {
             res.json('hiii')
         }
         catch (error) {
-
+            next(error);
         }
 
 
     }
-    async getUsers(req: Request, res: Response) {
+    async getUsers(req: Request, res: Response,next:(error:string)=>void) {
 
         try {
             res.json('hiii')
         }
         catch (error) {
-
+            next(error);
         }
 
 
