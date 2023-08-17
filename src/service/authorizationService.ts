@@ -34,6 +34,20 @@ class userService{
             user:userDTO
         }
     }
+    async activate(activationLink:string){
+
+        const user = SignupgModel.findOne({activationLink});
+
+        if (!user) {
+
+            throw new Error('Wrong activation link!!!')
+            
+        }
+        (await user).isActivated = true;
+
+        (await user).save();
+
+    }
 }
 
 export default new userService()

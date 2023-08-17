@@ -9,7 +9,8 @@ class mailService {
       auth: {
         user: "wyzdrykm@gmail.com",
         pass: "stmmkctjltqbkbnq",
-      }
+      },
+      from:"wyzdrykm@gmail.com",
     })
   }
 
@@ -22,10 +23,10 @@ class mailService {
       }
     })
     await this.transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: 'social network wyzdrykm@gmail.com',
       to: to,
       subject: 'Активація акаунта' + process.env.API_URL,
-      text: '',
+      text: 'Hello. This email is for your email verification.',
       html: `
         <div>
           <h1>Account activation</h1>
