@@ -48,10 +48,16 @@ class AuthorizationController {
     async activate(req: Request, res: Response) {
 
         try {
-            res.json('hiii')
+            console.log(`link ${req.params.link}`);
+            
+            const activationLink = req.params.link;
+            await authorizationService.activate(activationLink);
+
+            return res.redirect(process.env.API_URL);
         }
         catch (error) {
-
+            console.log(error);
+            
         }
 
 

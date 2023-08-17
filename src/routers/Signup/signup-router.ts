@@ -11,7 +11,7 @@ const AuthorizationRouter = Router()
 AuthorizationRouter.post('/registration',registration);
 AuthorizationRouter.post('/login',login);
 AuthorizationRouter.post('/logout',logout);
-AuthorizationRouter.get('/activate/:linl',activate);
+AuthorizationRouter.get('/activate/:link',activate);
 AuthorizationRouter.get('/refresh',refresh);
 AuthorizationRouter.get('/gusers',getUsers);
 

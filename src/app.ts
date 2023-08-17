@@ -14,6 +14,7 @@ import Blog from './modules/userPlaceholder';
 import UserRouter from './routers/User/user-router';
 
 import AuthorizationRouter from './routers/Signup/signup-router';
+import errorMiddleware from './middlewares/error-middleware';
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
  
 
 const dbURI = process.env.DB_URL;
@@ -63,5 +65,5 @@ app.use('',AuthorizationRouter);
 
 
 
-
+app.use(errorMiddleware);
 
