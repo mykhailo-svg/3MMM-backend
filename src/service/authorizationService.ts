@@ -17,7 +17,7 @@ class userService{
         if (candidate) {
             console.log(`User with ${email} exists!`);
             
-            throw ApiError.BadRequest(`User with ${email} exists!`)
+            throw ApiError.BadRequest(`User with ${email} exists!`,[])
         }
         const hashPassword = await bcrypt.hash(password,3);
         const activationLink = uuid.v4();

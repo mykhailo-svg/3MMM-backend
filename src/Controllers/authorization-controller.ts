@@ -1,19 +1,23 @@
 import { Request, Response } from 'express';
 import authorizationService from '../service/authorizationService';
-
-
-
+import { validationResult } from 'express-validator';
+import ApiError from '../Errors/error-handler';
 
 class AuthorizationController {
-    async registration(req: Request, res: Response,next:(error:string)=>void) {
+    async registration(req: Request, res: Response, next: (error: any) => void) {
 
         try {
+            const errors = validationResult(req);
 
-            const {email,password} = req.body; 
-            
-            
+            if (!errors.isEmpty()) {
+                return next(ApiError.BadRequest("Error while validation",errors.array()) )
+            }
+
+            const { email, password } = req.body;
+
+
             const userData = await authorizationService.registration(email, password)
-            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000 ,httpOnly:true})
+            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
             return res.json(userData);
         }
         catch (error) {
@@ -23,7 +27,7 @@ class AuthorizationController {
 
 
     }
-    async login(req: Request, res: Response,next:(error:string)=>void) {
+    async login(req: Request, res: Response, next: (error: string) => void) {
 
         try {
             res.json('hiii')
@@ -34,7 +38,7 @@ class AuthorizationController {
 
 
     }
-    async logout(req: Request, res: Response,next:(error:string)=>void) {
+    async logout(req: Request, res: Response, next: (error: string) => void) {
 
         try {
             res.json('hiii')
@@ -45,11 +49,11 @@ class AuthorizationController {
 
 
     }
-    async activate(req: Request, res: Response,next:(error:string)=>void) {
+    async activate(req: Request, res: Response, next: (error: string) => void) {
 
         try {
             console.log(`link ${req.params.link}`);
-            
+
             const activationLink = req.params.link;
             await authorizationService.activate(activationLink);
 
@@ -62,7 +66,7 @@ class AuthorizationController {
 
 
     }
-    async refresh(req: Request, res: Response,next:(error:string)=>void) {
+    async refresh(req: Request, res: Response, next: (error: string) => void) {
 
         try {
             res.json('hiii')
@@ -73,7 +77,7 @@ class AuthorizationController {
 
 
     }
-    async getUsers(req: Request, res: Response,next:(error:string)=>void) {
+    async getUsers(req: Request, res: Response, next: (error: string) => void) {
 
         try {
             res.json('hiii')

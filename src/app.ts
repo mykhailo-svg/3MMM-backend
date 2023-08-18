@@ -16,6 +16,8 @@ import UserRouter from './routers/User/user-router';
 import AuthorizationRouter from './routers/Signup/signup-router';
 import errorMiddleware from './middlewares/error-middleware';
 
+
+
 dotenv.config();
 
 
@@ -30,6 +32,8 @@ const PORT = process.env.PORT || 3001;
 
 app.use(cors())
 app.use(morgan('dev'));
+
+
 
 app.use(cookieParser());
 app.use(express.json());
