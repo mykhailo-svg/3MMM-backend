@@ -79,6 +79,13 @@ class userService {
         }
 
     }
+    async logout(refreshToken: string) {
+        console.log('refresh token ' + refreshToken);
+
+        const token = await tokenService.deleteToken(refreshToken);
+        return token;
+
+    }
 }
 
 export default new userService()

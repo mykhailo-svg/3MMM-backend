@@ -17,7 +17,7 @@ class AuthorizationController {
 
 
             const userData = await authorizationService.registration(email, password)
-            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: false })
             return res.json(userData);
         }
         catch (error) {
@@ -32,7 +32,7 @@ class AuthorizationController {
         try {
             const {email,password } = req.body;
             const userData = await authorizationService.login(email,password);
-            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: false })
             return res.json(userData);
         }
         catch (error) {
@@ -44,11 +44,19 @@ class AuthorizationController {
     async logout(req: Request, res: Response, next: (error: string) => void) {
 
         try {
-            res.json('hiii')
+            console.clear();
+            const {refreshToken} = req.cookies;
+            console.log(refreshToken + ' -token');
+            
+            const token = await authorizationService.logout(refreshToken.refreshToken);
+            res.clearCookie('refreshToken');
+            return res.json(refreshToken.refreshToken)
         }
         catch (error) {
-            next(error);
+            console.log(error);
+            
         }
+
 
 
     }
@@ -60,7 +68,7 @@ class AuthorizationController {
             const activationLink = req.params.link;
             await authorizationService.activate(activationLink);
 
-            return res.redirect(process.env.API_URL);
+            return res.redirect(process.env.CLIENT_URL);
         }
         catch (error) {
             console.log(error);
@@ -72,7 +80,9 @@ class AuthorizationController {
     async refresh(req: Request, res: Response, next: (error: string) => void) {
 
         try {
-            res.json('hiii')
+            console.log(req.cookies.refreshToken.refreshToken + ' -token cookie');
+            res.json(req.cookies.refreshToken.refreshToken)
+            
         }
         catch (error) {
             next(error);

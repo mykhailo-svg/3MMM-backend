@@ -19,7 +19,7 @@ AuthorizationRouter.post('/registration',
 AuthorizationRouter.post('/login', login);
 AuthorizationRouter.post('/logout', logout);
 AuthorizationRouter.get('/activate/:link', activate);
-AuthorizationRouter.get('/refresh', refresh);
+AuthorizationRouter.post('/refresh', refresh);
 AuthorizationRouter.get('/gusers', getUsers);
 
 
