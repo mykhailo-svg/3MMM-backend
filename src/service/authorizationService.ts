@@ -11,44 +11,72 @@ import ApiError from "../Errors/error-handler";
 
 
 
-class userService{
-    async registration(email:string,password:string){
-        const candidate = await SignupgModel.findOne({email:email});
+class userService {
+    async registration(email: string, password: string) {
+        const candidate = await SignupgModel.findOne({ email: email });
         if (candidate) {
             console.log(`User with ${email} exists!`);
-            
-            throw ApiError.BadRequest(`User with ${email} exists!`,[])
-        }
-        const hashPassword = await bcrypt.hash(password,3);
-        const activationLink = uuid.v4();
-        const user = await SignupgModel.create({email,password:hashPassword,activationLink});
 
-        await mailService.sendActivationMail(email,`${process.env.API_URL}/activate/${activationLink}`);
+            throw ApiError.BadRequest(`User with ${email} exists!`, [])
+        }
+        const hashPassword = await bcrypt.hash(password, 3);
+        const activationLink = uuid.v4();
+        const user = await SignupgModel.create({ email, password: hashPassword, activationLink });
+
+        await mailService.sendActivationMail(email, `${process.env.API_URL}/activate/${activationLink}`);
 
 
         const userDTO = new UserDto(user);
 
-        const tokens = tokenService.generateTokens({...userDTO});
+        const tokens = tokenService.generateTokens({ ...userDTO });
 
-        await tokenService.saveToken(userDTO.id,tokens.refreshToken);
+        await tokenService.saveToken(userDTO.id, tokens.refreshToken);
 
-        return{
+        return {
             ...tokens,
-            user:userDTO
+            user: userDTO
         }
     }
-    async activate(activationLink:string){
-        
-        const user = await SignupgModel.findOne({activationLink});
-        
-        
+    async activate(activationLink: string) {
+
+        const user = await SignupgModel.findOne({ activationLink });
+
+
         if (!user) {
 
             throw new Error('Wrong activation link!!!')
-            
-        } 
+
+        }
         user.isActivated = true;
         user.save();
+
+    }
+    async login(email: string, password: string) {
+
+
+        const user = await SignupgModel.findOne({ email });
+
+        if (!user) {
+
+            throw ApiError.BadRequest("User wasn't found!", [])
+
+
+        }
+        const exitstingPassword = await bcrypt.compare(password, user.password)
+        if (!exitstingPassword) {
+
+            throw ApiError.BadRequest("Incorrect password", []);
+
+        }
+
+        const userDto = new UserDto(user);
+        const tokens = tokenService.generateTokens({ ...userDto })
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {
+            ...tokens,
+            user: userDto
+        }
 
     }
 }
