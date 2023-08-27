@@ -6,6 +6,7 @@ const { getUsers, login, logout, registration, refresh, activate } = authorizati
 const AuthorizationRouter = Router();
 
 import { body } from 'express-validator';
+import authMiddleware from "../../middlewares/auth-middleware";
 
 
 
@@ -20,7 +21,7 @@ AuthorizationRouter.post('/login', login);
 AuthorizationRouter.post('/logout', logout);
 AuthorizationRouter.get('/activate/:link', activate);
 AuthorizationRouter.post('/refresh', refresh);
-AuthorizationRouter.get('/gusers', getUsers);
+AuthorizationRouter.get('/userss',authMiddleware, getUsers);
 
 
 export default AuthorizationRouter;

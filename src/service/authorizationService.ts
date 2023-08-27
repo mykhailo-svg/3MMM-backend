@@ -1,3 +1,4 @@
+
 import SignupgModel from "../modules/userSignupModel";
 
 import * as bcrypt from 'bcrypt';
@@ -86,6 +87,33 @@ class userService {
         return token;
 
     }
+    async refresh(refreshToken: string) {
+        if (!refreshToken) {
+
+            throw ApiError.UnauthorizedError();
+        }
+        const userDatas = await tokenService.validateRefreshToken(refreshToken);
+        const DbTokenExists = await tokenService.findToken(refreshToken);
+        if (!userDatas || !DbTokenExists) {
+
+            throw ApiError.UnauthorizedError();
+            
+        }
+        const user = await SignupgModel.findById(userDatas.id)
+        const userDto = new UserDto(user);
+        const tokens = tokenService.generateTokens({ ...userDto })
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {
+            ...tokens,
+            user: userDto
+        }
+    }
+    async getAllUsers(){
+        const users = await SignupgModel.find();
+        
+    }
+
 }
 
 export default new userService()

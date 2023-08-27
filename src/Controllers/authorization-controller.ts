@@ -80,8 +80,11 @@ class AuthorizationController {
     async refresh(req: Request, res: Response, next: (error: string) => void) {
 
         try {
-            console.log(req.cookies.refreshToken.refreshToken + ' -token cookie');
-            res.json(req.cookies.refreshToken.refreshToken)
+            
+            const {refreshToken} = req.cookies;
+            const userData = await authorizationService.refresh(refreshToken.refreshToken);
+            res.cookie('refreshToken', userData, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: false })
+            return res.json(userData);
             
         }
         catch (error) {
@@ -93,12 +96,16 @@ class AuthorizationController {
     async getUsers(req: Request, res: Response, next: (error: string) => void) {
 
         try {
-            res.json('hiii')
+            const users = await authorizationService.getAllUsers();
+            return res.json(users)
         }
         catch (error) {
             next(error);
         }
 
+
+    }
+    async recoveryActivation(email:string){
 
     }
 }

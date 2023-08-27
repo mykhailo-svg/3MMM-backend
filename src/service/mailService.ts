@@ -10,7 +10,7 @@ class mailService {
         user: "wyzdrykm@gmail.com",
         pass: "stmmkctjltqbkbnq",
       },
-      from:"wyzdrykm@gmail.com",
+      from: "wyzdrykm@gmail.com",
     })
   }
 
@@ -34,6 +34,9 @@ class mailService {
         </div>
       `
     })
+  }
+  async sendRecoveryMail(email:string){
+
   }
 }
 
